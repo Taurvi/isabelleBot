@@ -41,7 +41,7 @@ public class TurnipPriceListener implements MessageCreateListener {
         }
 
         if (turnipHelpCommand.isCommand(event.getMessage().getContent())) {
-            executeTurnipHelpCommand(turnipGetCommand, event);
+            executeTurnipHelpCommand(turnipHelpCommand, event);
         }
     }
 
