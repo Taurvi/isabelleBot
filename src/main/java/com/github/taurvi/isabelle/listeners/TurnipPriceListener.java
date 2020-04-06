@@ -10,7 +10,6 @@ import org.javacord.api.listener.message.MessageCreateListener;
 
 import java.time.Clock;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +70,7 @@ public class TurnipPriceListener implements MessageCreateListener {
         StringBuilder reply = new StringBuilder();
         String pricePattern = "**%d**. %s: %s";
 
-        List<TurnipPrice> turnipPriceList = turnipRepository.getAllSortedByDateAndPrice();
+        List<TurnipPrice> turnipPriceList = turnipRepository.getAllSortedByPrice();
         for(int index = 0; index < turnipPriceList.size(); index++) {
             TurnipPrice currentEntry = turnipPriceList.get(index);
             reply.append(String.format(pricePattern, index + 1, currentEntry.getUserName(),

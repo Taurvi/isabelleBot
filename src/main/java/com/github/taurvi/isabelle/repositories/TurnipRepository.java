@@ -10,16 +10,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 import javax.inject.Inject;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Clock;
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class TurnipRepository implements Repository<TurnipPrice> {
     private MongoCollection<TurnipPrice> turnipsCollection;
@@ -49,10 +40,12 @@ public class TurnipRepository implements Repository<TurnipPrice> {
         return turnipsCollection.findOneAndDelete(convertIndexToBSON(index));
     }
 
-    public List<TurnipPrice> getAllSortedByDateAndPrice() {
+    public List<TurnipPrice> getAllSortedByPrice() {
         List<TurnipPrice> turnipPriceList = Lists.newArrayList();
-        FindIterable<TurnipPrice> turnipPriceFindIterable = turnipsCollection.find().sort(sortByDateAndPrice());
-        turnipPriceFindIterable.forEach(turnipPriceList::add);
+        FindIterable<TurnipPrice> turnipPriceFindIterable = turnipsCollection.find().sort(sortByPrice());
+        for(TurnipPrice turnipPrice : turnipPriceFindIterable) {
+            turnipPriceList.add(turnipPrice);
+        }
         return turnipPriceList;
     }
 
@@ -60,7 +53,7 @@ public class TurnipRepository implements Repository<TurnipPrice> {
         return new Document(ImmutableMap.of("_id", Long.valueOf(index)));
     }
 
-    private Document sortByDateAndPrice() {
+    private Document sortByPrice() {
         return new Document(ImmutableMap.of("price", -1));
     }
 }
