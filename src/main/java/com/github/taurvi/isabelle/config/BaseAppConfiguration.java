@@ -3,7 +3,7 @@ package com.github.taurvi.isabelle.config;
 public class BaseAppConfiguration implements IsabelleConfiguration {
     @Override
     public String getDiscordAPIToken() {
-        return "YOUR_API_TOKEN_HERE";
+        return "";
     }
 
     @Override
@@ -13,26 +13,46 @@ public class BaseAppConfiguration implements IsabelleConfiguration {
 
     @Override
     public String getTwitterAPIConsumerKey() {
-        return "YOUR_TWITTER_API_CONSUMER_KEY";
+        return "";
     }
 
     @Override
     public String getTwitterAPIConsumerSecret() {
-        return "YOUR_TWITTER_API_CONSUMER_SECRET";
+        return "";
     }
 
     @Override
     public String getTwitterAPIAccessToken() {
-        return "YOUR_TWITTER_API_ACCESS_TOKEN";
+        return "";
     }
 
     @Override
     public String getTwitterAPIAccessTokenSecret() {
-        return "YOUR_TWITTER_API_ACCESS_TOKEN_SECRET";
+        return "";
     }
 
     @Override
     public long getACNHTwitterID() {
-        return 1377451009;
-    };
+        return 0;
+    }
+
+    @Override
+    public String getMongoClientAddress() {
+        return "";
+    }
+
+    @Override
+    public int getMongoClientPort() {
+        return 0;
+    }
+
+    @Override
+    public String getMongoDatabase() {
+        return "";
+    }
+
+    @Override
+    public String getMongoCollectionForTurnips() {
+        return "";
+    }
 }

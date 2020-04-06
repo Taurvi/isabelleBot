@@ -7,8 +7,19 @@ ext {
     javaMainClass = "com.github.taurvi.isabelle.Main"
 }
 
-application {
-    mainClassName = javaMainClass
+jar {
+    manifest {
+        attributes(
+                "Main-Class": javaMainClass
+        )
+    }
+}
+
+task runWithJavaExec(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = javaMainClass
 }
 
 group 'com.github.taurvi'
@@ -21,9 +32,14 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
     implementation 'org.javacord:javacord:3.0.5'
     implementation 'com.google.inject:guice:4.2.3'
-    implementation 'org.projectlombok:lombok:1.18.12'
+    implementation 'com.google.firebase:firebase-admin:6.12.2'
+    implementation 'org.mongodb:mongodb-driver-sync:4.0.1'
     implementation 'org.twitter4j:twitter4j-stream:4.0.7'
     testImplementation 'org.assertj:assertj-core:3.15.0'
     testImplementation 'org.mockito:mockito-core:3.3.3'

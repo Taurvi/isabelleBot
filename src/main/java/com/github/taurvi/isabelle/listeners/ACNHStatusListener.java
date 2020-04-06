@@ -27,7 +27,6 @@ public class ACNHStatusListener implements StatusListener {
 
     @Override
     public void onStatus(Status status) {
-        System.out.println(status.toString());
         sendStatusToDiscord(status);
     }
 
