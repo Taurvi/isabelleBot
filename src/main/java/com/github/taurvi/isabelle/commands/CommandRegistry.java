@@ -1,6 +1,7 @@
 package com.github.taurvi.isabelle.commands;
 
 import com.github.taurvi.isabelle.commands.turnips.TurnipGetCommand;
+import com.github.taurvi.isabelle.commands.turnips.TurnipHelpCommand;
 import com.github.taurvi.isabelle.commands.turnips.TurnipSetCommand;
 import com.google.common.collect.Maps;
 import com.google.inject.Provider;
@@ -23,5 +24,6 @@ public class CommandRegistry {
     private void registerCommands() {
         commandMap.put("turnip-set", new TurnipSetCommand(messageBuilderProvider));
         commandMap.put("turnip-get", new TurnipGetCommand(messageBuilderProvider));
+        commandMap.put("turnip-help", new TurnipHelpCommand(messageBuilderProvider));
     }
 }

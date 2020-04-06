@@ -30,6 +30,7 @@ public class TurnipPriceListener implements MessageCreateListener {
     public void onMessageCreate(MessageCreateEvent event) {
         IsabelleCommand turnipSetCommand = commandMap.get("turnip-set");
         IsabelleCommand turnipGetCommand = commandMap.get("turnip-get");
+        IsabelleCommand turnipHelpCommand = commandMap.get("turnip-help");
 
         if (turnipSetCommand.isCommand(event.getMessage().getContent())) {
             executeTurnipSetCommand(turnipSetCommand, event);
@@ -37,6 +38,10 @@ public class TurnipPriceListener implements MessageCreateListener {
 
         if (turnipGetCommand.isCommand(event.getMessage().getContent())) {
             executeTurnipGetCommand(turnipGetCommand, event);
+        }
+
+        if (turnipHelpCommand.isCommand(event.getMessage().getContent())) {
+            executeTurnipHelpCommand(turnipGetCommand, event);
         }
     }
 
@@ -69,7 +74,7 @@ public class TurnipPriceListener implements MessageCreateListener {
 
     private void executeTurnipGetCommand(IsabelleCommand command, MessageCreateEvent event) {
         StringBuilder reply = new StringBuilder();
-        String pricePattern = "**%d**. %s: %s";
+        String pricePattern = "**%d**. %s: **%s**";
 
         List<TurnipPrice> turnipPriceList = turnipRepository.getAllSortedByPrice();
         for(int index = 0; index < turnipPriceList.size(); index++) {
@@ -83,6 +88,16 @@ public class TurnipPriceListener implements MessageCreateListener {
         }
 
         reply.append("⚠️ - Price last updated over 10 hours ago");
+
+        command.executeSuccess(event, reply.toString());
+    }
+
+    private void executeTurnipHelpCommand(IsabelleCommand command, MessageCreateEvent event) {
+        StringBuilder reply = new StringBuilder();
+        reply.append("```\n")
+                .append("!turnip-get - Gets all the prices currently saved.\n")
+                .append("!turnip-set {number} - Allows you to set a price for turnips. (ex: !turnip-set 100)\n")
+                .append("```");
 
         command.executeSuccess(event, reply.toString());
     }
