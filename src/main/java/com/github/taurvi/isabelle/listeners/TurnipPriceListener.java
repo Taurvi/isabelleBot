@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TurnipPriceListener implements MessageCreateListener {
+    private static final int TURNIP_PRICE_EXPIRATION_TIME_IN_MINS = 600;
     private Clock clock;
     private Map<String, IsabelleCommand> commandMap;
     private TurnipRepository turnipRepository;
@@ -81,7 +82,7 @@ public class TurnipPriceListener implements MessageCreateListener {
             reply.append("\n\n");
         }
 
-        reply.append("⚠️ - Price last updated over 24 hours ago");
+        reply.append("⚠️ - Price last updated over 10 hours ago");
 
         command.executeSuccess(event, reply.toString());
     }
@@ -89,7 +90,7 @@ public class TurnipPriceListener implements MessageCreateListener {
     private boolean isStale(TurnipPrice currentEntry) {
         Instant timestamp = Instant.parse(currentEntry.getTimestamp());
         Long difference = ChronoUnit.MINUTES.between(timestamp, Instant.now());
-        return difference > 1440;
+        return difference > TURNIP_PRICE_EXPIRATION_TIME_IN_MINS;
     }
 
     private String removeCommand(IsabelleCommand turnipSetCommand, String content) {
@@ -100,7 +101,7 @@ public class TurnipPriceListener implements MessageCreateListener {
         return TurnipPrice.builder()
                 .id(user.getId())
                 .timestamp(clock.instant().toString())
-                .userName(user.getName())
+                .userName(user.getDisplayName())
                 .price(price)
                 .build();
     }
