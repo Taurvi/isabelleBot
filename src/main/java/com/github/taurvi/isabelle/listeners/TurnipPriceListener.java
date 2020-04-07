@@ -31,9 +31,7 @@ public class TurnipPriceListener implements MessageCreateListener {
         IsabelleCommand turnipSetCommand = commandMap.get("turnip-set");
         IsabelleCommand turnipGetCommand = commandMap.get("turnip-get");
         IsabelleCommand turnipHelpCommand = commandMap.get("turnip-help");
-
-        System.out.println(event.getChannel().toString());
-
+        
         if (turnipSetCommand.isCommand(event.getMessage().getContent())) {
             executeTurnipSetCommand(turnipSetCommand, event);
         }
