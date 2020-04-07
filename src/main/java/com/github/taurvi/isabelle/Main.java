@@ -39,8 +39,7 @@ public class Main {
         if (botChannel.isPresent()) {
             messageBuilderProvider.get().setEmbed(new EmbedBuilder()
                     .setTitle("💝 __** I've Been Updated! **__ 💝")
-                    .setDescription("I now delete stale turnip prices automatically! \n\n" +
-                            "I also now will tweet from @AnimalCrossing to the #twitter channel")
+                    .setDescription("Fixed issue with numbering due to deleted turnip prices.")
                     .setColor(Color.green))
                     .send(botChannel.get());
         }
