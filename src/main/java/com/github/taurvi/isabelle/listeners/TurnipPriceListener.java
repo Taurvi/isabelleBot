@@ -32,6 +32,8 @@ public class TurnipPriceListener implements MessageCreateListener {
         IsabelleCommand turnipGetCommand = commandMap.get("turnip-get");
         IsabelleCommand turnipHelpCommand = commandMap.get("turnip-help");
 
+        System.out.println(event.getChannel().toString());
+
         if (turnipSetCommand.isCommand(event.getMessage().getContent())) {
             executeTurnipSetCommand(turnipSetCommand, event);
         }
@@ -79,15 +81,14 @@ public class TurnipPriceListener implements MessageCreateListener {
         List<TurnipPrice> turnipPriceList = turnipRepository.getAllSortedByPrice();
         for(int index = 0; index < turnipPriceList.size(); index++) {
             TurnipPrice currentEntry = turnipPriceList.get(index);
-            reply.append(String.format(pricePattern, index + 1, currentEntry.getUserName(),
-                    currentEntry.getPrice()));
             if (isStale(currentEntry)) {
-                reply.append(" ⚠️");
+                turnipRepository.delete(Long.toString(currentEntry.getId()));
+            } else {
+                reply.append(String.format(pricePattern, index + 1, currentEntry.getUserName(),
+                        currentEntry.getPrice()));
+                reply.append("\n\n");
             }
-            reply.append("\n\n");
         }
-
-        reply.append("⚠️ - Price last updated over 10 hours ago");
 
         command.executeSuccess(event, reply.toString());
     }

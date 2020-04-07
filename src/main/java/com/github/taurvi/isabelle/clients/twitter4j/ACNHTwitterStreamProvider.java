@@ -34,8 +34,6 @@ public class ACNHTwitterStreamProvider implements Provider<TwitterStream> {
 
     private TwitterStream configureInstance(TwitterStream twitterStream) {
         filterQuery.follow(appConfig.getACNHTwitterID());
-        twitterStream.addListener(listener);
-        twitterStream.filter(filterQuery);
-        return twitterStream;
+        return twitterStream.addListener(listener).filter(filterQuery);
     }
 }
